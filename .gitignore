@@ -1,0 +1,5 @@
+.DS_Store
+Ghidra.app
+*.class
+*.jar
+docking/widgets/filechooser/*.class
