@@ -10,7 +10,7 @@ fi
 rm -rf Ghidra.app
 
 mkdir -p Ghidra.app/Contents/MacOS
-clang -x objective-c -arch x86_64h -arch arm64 -fmodules -framework Foundation ghidraRun.m -o Ghidra.app/Contents/MacOS/Ghidra
+clang -x objective-c -fmodules -framework Foundation ghidraRun.m -o Ghidra.app/Contents/MacOS/Ghidra
 
 mkdir -p Ghidra.app/Contents/Resources/
 cp -R "$(echo "$1" | sed s,/*$,,)" Ghidra.app/Contents/Resources/ghidra
@@ -38,3 +38,5 @@ cp OpenGhidra.class Ghidra.app/Contents/Resources
 javac -cp "$(find Ghidra.app -regex '.*\.jar' | tr '\n' ':')" OpenGhidraAgent.java
 jar --create --file OpenGhidra.jar --manifest manifest OpenGhidraAgent*.class
 cp OpenGhidra.jar Ghidra.app/Contents/Resources
+
+codesign --force --deep -s - --entitlements entitlements.plist Ghidra.app

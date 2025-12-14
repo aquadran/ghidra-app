@@ -1,6 +1,8 @@
 package docking.widgets.filechooser;
 
 import docking.DialogComponentProvider;
+import docking.Tool;
+import docking.actions.ToolActions;
 import ghidra.util.filechooser.GhidraFileChooserModel;
 import ghidra.util.filechooser.GhidraFileFilter;
 import java.awt.Component;
@@ -24,7 +26,7 @@ public class GhidraFileChooser extends DialogComponentProvider {
 	public static final int FILES_AND_DIRECTORIES = 2;
 
 	public GhidraFileChooser(Component parent) {
-		this(new LocalFileChooserModel(), parent);
+		this(new LocalFileChooserModel(() -> null), parent);
 	}
 
 	GhidraFileChooser(GhidraFileChooserModel model, Component parent) {
@@ -67,6 +69,14 @@ public class GhidraFileChooser extends DialogComponentProvider {
 
 	public void setMultiSelectionEnabled(boolean b) {
 		fileDialog.setMultipleMode(b);
+	}
+
+	public static void registerSharedActions(Tool tool, ToolActions toolActions) {
+		// Ghidra 12.x added this API; native FileDialog chooser has no shared actions to register.
+	}
+
+	public boolean hasBigData() {
+		return false;
 	}
 
 	public void setApproveButtonText(String buttonText) {
